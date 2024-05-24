@@ -185,6 +185,8 @@ Ndef(\DuoWave, {
     mix2 = (sine2 * sineMix) + (saw2 * sawMix) + (pulse2 * pulseMix) + (tri2 * triMix) + (noise2 * noiseMix);
     mix2 = mix2 * (amp2 / (sineMix + sawMix + pulseMix + triMix + noiseMix).max(1));
 
+    mix1 = mix1 + mix2;
+
     // Apply LFO to filter cutoff
     lfo = SinOsc.kr(filterLFOSpeed, 0, filterLFODepth, filterCutoff);
 
@@ -195,12 +197,8 @@ Ndef(\DuoWave, {
     filtered1 = MoogFF.ar(mix1, filterFreq, filterResonance);
     filtered1 = filtered1 * env;
 
-    // Apply Moog filter with LFO and envelope modulation for voice 2
-    filtered2 = MoogFF.ar(mix2, filterFreq, filterResonance);
-    filtered2 = filtered2 * env;
-
     // Combine the two voices and apply chorus effect if enabled
-    output = (filtered1 + filtered2) * 0.5;
+    output = filtered1 * 0.5;
     chorus = Select.ar(chorusOn, [
         output,
         output + DelayC.ar(output, 0.03, SinOsc.kr(chorusSpeed, 0, chorusDepth, 0.03))
