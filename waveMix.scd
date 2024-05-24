@@ -110,11 +110,6 @@ Ndef(\waveformSynth).clear;
 s.quit;
 
 
-//lfo retrigger when a note comes in
-//auto filter
-// assign channel according to note
-
-
 
 // Control the parameters dynamically
 Ndef(\waveformSynth).set(\freq, 880);        // Change frequency to 880 Hz
@@ -125,7 +120,7 @@ Ndef(\waveformSynth).set(\pulseWidth, 0.3);  // Change pulse width
 Ndef(\waveformSynth).set(\amp, 0.2);         // Increase amplitude
 
 
-
+//version with 2 voices
 (
 Ndef(\DuoWave, {
     arg freq1 = 220,
